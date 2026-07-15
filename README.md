@@ -42,6 +42,9 @@ weather-app/
 ├── index.html          → the page itself (structure only)
 ├── .gitignore           → tells Git to skip js/config.js (keeps your key private)
 │
+├── api/
+│   └── weather.js      → Vercel Serverless Function proxy (hides API key in production)
+│
 ├── css/
 │   ├── style.css        → colors, layout, glass effect, animations
 │   └── responsive.css   → phone/tablet breakpoints
@@ -95,6 +98,18 @@ const CONFIG = {
   API_KEY: "your-real-key-goes-here",
 };
 ```
+
+### 3. Deploying to Vercel (Production)
+
+To deploy the app securely without exposing your API key in the browser:
+
+1. Import your project repository into Vercel.
+2. In the Vercel project dashboard, go to **Settings > Environment Variables**.
+3. Create a new variable:
+   - **Key**: `WEATHER_API_KEY`
+   - **Value**: *[your-real-weather-api-key]*
+4. Deploy the project. Vercel will host the secure backend proxy under `api/weather.js` to serve all visitors using your key safely.
+
 
 ## 🎨 How the color-changing background works
 
