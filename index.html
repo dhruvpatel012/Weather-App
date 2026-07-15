@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyCast — Weather</title>
+  <meta name="description" content="A minimal, premium weather app." />
+
+  <!-- Google Fonts: Space Grotesk (display) + Inter (body/data) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <!-- Favicon -->
+   <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
+</head>
+<body>
+  <!-- Ambient animated gradient glow, sits behind everything -->
+  <div class="sky-glow" id="skyGlow" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <!-- -------------------- HEADER -------------------- -->
+    <header class="app-header fade-in">
+      <div class="brand">
+        <i data-lucide="cloud-sun" class="brand__icon"></i>
+        <span class="brand__name">SkyCast</span>
+      </div>
+
+      <form class="search" id="searchForm" role="search" aria-label="Search city">
+        <i data-lucide="search" class="search__icon"></i>
+        <input
+          type="text"
+          id="searchInput"
+          class="search__input"
+          placeholder="Search for a city…"
+          autocomplete="off"
+          aria-label="City name"
+        />
+        <button type="button" class="icon-btn" id="locationBtn" title="Use current location" aria-label="Use current location">
+          <i data-lucide="locate-fixed"></i>
+        </button>
+      </form>
+
+      <button type="button" class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark or light theme">
+        <i data-lucide="moon" id="themeIcon"></i>
+      </button>
+    </header>
+
+    <!-- -------------------- MAIN -------------------- -->
+    <main class="app-main">
+      <!-- Error banner -->
+      <div class="error-banner" id="errorBanner" role="alert" hidden>
+        <i data-lucide="alert-triangle"></i>
+        <span id="errorMessage">Something went wrong.</span>
+        <button type="button" class="error-banner__close" id="errorClose" aria-label="Dismiss error">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <!-- Loading skeleton -->
+      <section class="skeleton" id="skeleton" aria-hidden="true">
+        <div class="skeleton__hero shimmer"></div>
+        <div class="skeleton__row">
+          <div class="skeleton__card shimmer"></div>
+          <div class="skeleton__card shimmer"></div>
+          <div class="skeleton__card shimmer"></div>
+          <div class="skeleton__card shimmer"></div>
+        </div>
+      </section>
+
+      <!-- Content wrapper (populated by JS) -->
+      <div class="content" id="content" hidden>
+        <!-- Hero: current conditions -->
+        <section class="hero glass fade-in" id="hero">
+          <div class="hero__top">
+            <div class="hero__location">
+              <h1 id="cityName">—</h1>
+              <p id="dateTime" class="hero__datetime">—</p>
+            </div>
+            <div class="hero__condition">
+              <img id="weatherIcon" class="hero__icon" src="" alt="" width="72" height="72" />
+              <span id="conditionText">—</span>
+            </div>
+          </div>
+
+          <div class="hero__mid">
+            <span class="hero__temp" id="temperature">—°</span>
+            <div class="hero__meta">
+              <span id="feelsLike">Feels like —°</span>
+              <span id="highLow">H: —° L: —°</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hourly forecast -->
+        <section class="section fade-in">
+          <h2 class="section__title">
+            <i data-lucide="clock"></i> Hourly Forecast
+          </h2>
+          <div class="hourly-scroll" id="hourlyScroll"></div>
+        </section>
+
+        <!-- 7-day forecast -->
+        <section class="section fade-in">
+          <h2 class="section__title">
+            <i data-lucide="calendar-days"></i> 7-Day Forecast
+          </h2>
+          <div class="daily-list" id="dailyList"></div>
+        </section>
+
+        <!-- Stat cards: bento grid -->
+        <section class="section fade-in">
+          <h2 class="section__title">
+            <i data-lucide="gauge"></i> Details
+          </h2>
+          <div class="stats-grid" id="statsGrid"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <p>Made by <a href="https://www.weatherapi.com/" target="_blank" rel="noopener">Dhruv Patel</a></p>
+    </footer>
+  </div>
+
+  <!-- Scripts: order matters (utils → api → ui → app) -->
+  <script src="js/utils.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
