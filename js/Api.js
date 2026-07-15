@@ -3,32 +3,37 @@
 
 const BASE_URL = "https://api.weatherapi.com/v1";
 
-// WEATHERAPI.COM KEY 
-const API_KEY = "d41f353085a54ae6ac262939261407";
-
-// Get the API key we hardcoded above
+// Get the API key from config.js (CONFIG object)
 function getApiKey() {
-  return API_KEY;
+  if (typeof CONFIG !== "undefined" && CONFIG.API_KEY) {
+    return CONFIG.API_KEY;
+  }
+  return "";
 }
 
 // Get the weather forecast for a city name (like "Paris")
 // days = how many days of forecast we want (we use 7)
 async function getForecast(city, days) {
-  const apiKey = getApiKey();
+  const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:";
+  const hasLocalKey = typeof CONFIG !== "undefined" && CONFIG.API_KEY;
 
-  if (!apiKey) {
-    throw new Error("no-api-key");
+  let url;
+  if (isLocal && hasLocalKey) {
+    // Local development mode: fetch directly using local key
+    const apiKey = CONFIG.API_KEY;
+    url =
+      BASE_URL +
+      "/forecast.json?key=" +
+      apiKey +
+      "&q=" +
+      encodeURIComponent(city) +
+      "&days=" +
+      days +
+      "&aqi=no&alerts=no";
+  } else {
+    // Production/Vercel mode: fetch via serverless function proxy
+    url = `/api/weather?city=${encodeURIComponent(city)}&days=${days}`;
   }
-
-  const url =
-    BASE_URL +
-    "/forecast.json?key=" +
-    apiKey +
-    "&q=" +
-    encodeURIComponent(city) +
-    "&days=" +
-    days +
-    "&aqi=no&alerts=no";
 
   let response;
   try {
@@ -40,8 +45,15 @@ async function getForecast(city, days) {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => null);
-    const errorMessage = errorData && errorData.error ? errorData.error.message : "";
+    const errorMsg = errorData && errorData.error ? errorData.error : "";
 
+    // If the proxy backend returned a clean error code string, throw it directly
+    if (errorMsg && typeof errorMsg === "string") {
+      throw new Error(errorMsg);
+    }
+
+    // Fallback error parsing if calling direct API or unexpected proxy structure
+    const errorMessage = errorData && errorData.error ? errorData.error.message : "";
     if (response.status === 400 && errorMessage.toLowerCase().includes("no matching location")) {
       throw new Error("city-not-found");
     }

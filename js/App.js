@@ -98,11 +98,11 @@ function handleWeatherError(error) {
   showContent();
 
   if (error.message === "no-api-key") {
-    showError("No API key set. Open js/api.js and paste your WeatherAPI key into the API_KEY constant.");
+    showError("No API key set. (Local: configure js/config.js; Vercel: set WEATHER_API_KEY in environment variables).");
     return;
   }
   if (error.message === "bad-api-key") {
-    showError("That API key was rejected. Double check the API_KEY value in js/api.js.");
+    showError("That API key was rejected. Double check your key in js/config.js or Vercel environment variables.");
     return;
   }
   if (error.message === "city-not-found") {
