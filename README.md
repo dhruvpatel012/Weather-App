@@ -6,18 +6,18 @@ A clean, minimal weather app built with plain **HTML, CSS, and JavaScript** — 
 
 ## ✨ Features
 
-- 🔍 Search weather by city name
-- 📍 "Use my location" button (browser geolocation)
-- 🌡️ Current conditions: temperature, feels-like, condition, icon
-- ⏰ Hourly forecast (next 24 hours)
-- 📅 7-day forecast
-- 📊 Full detail stats: humidity, wind, pressure, visibility, UV index, sunrise & sunset
-- 🕐 Live clock and date
-- 🌗 Dark / light theme toggle (remembered between visits)
-- 💀 Loading skeleton while data fetches
-- ⚠️ Friendly error messages (bad city, no internet, bad API key)
-- 📱 Fully responsive — works on phone, tablet, and desktop
-- 🎨 A soft animated background glow that changes color depending on the weather (sunny, rainy, night, snowy, stormy, foggy, cloudy)
+- Search weather by city name
+- "Use my location" button (browser geolocation)
+- Current conditions: temperature, feels-like, condition, icon
+- Hourly forecast (next 24 hours)
+- 7-day forecast
+- Full detail stats: humidity, wind, pressure, visibility, UV index, sunrise & sunset
+- Live clock and date
+- Dark / light theme toggle (remembered between visits)
+- Loading skeleton while data fetches
+- Friendly error messages (bad city, no internet, bad API key)
+- Fully responsive — works on phone, tablet, and desktop
+- A soft animated background glow that changes color depending on the weather (sunny, rainy, night, snowy, stormy, foggy, cloudy)
 
 ---
 
@@ -141,7 +141,7 @@ Works in all modern browsers (Chrome, Firefox, Safari, Edge). Uses `backdrop-fil
 
 ---
 
-## 🙏 Credits
+## Credits
 
 - Weather data: [WeatherAPI.com](https://www.weatherapi.com/)
 - Icons: [Lucide](https://lucide.dev/)
